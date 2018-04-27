@@ -4,10 +4,9 @@
     "\\src",
     "\\src\\app",
     "\\src\\app\\dishdetail",
-    "\\src\\app\\menu",
-    "\\src\\app\\services",
-    "\\src\\app\\shared"
+    "\\src\\app\\footer",
+    "\\src\\app\\header"
   ],
-  "SelectedNode": "\\src\\app\\menu\\menu.component.ts",
+  "SelectedNode": "\\src\\app\\app.component.html",
   "PreviewInSolutionExplorer": false
 }
