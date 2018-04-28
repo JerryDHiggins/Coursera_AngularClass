@@ -10,6 +10,6 @@
     "\\src\\app\\services",
     "\\src\\app\\shared"
   ],
-  "SelectedNode": "\\src\\app\\shared\\dishes.ts",
+  "SelectedNode": "\\src\\app\\header\\header.component.html",
   "PreviewInSolutionExplorer": false
 }
