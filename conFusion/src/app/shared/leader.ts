@@ -6,4 +6,4 @@ export class Leader {
   abbr: string;
   featured: boolean;
   description: string;
-  } 
+  }
