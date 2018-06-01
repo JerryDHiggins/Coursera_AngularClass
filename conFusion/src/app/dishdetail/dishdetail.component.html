@@ -35,20 +35,74 @@
   </div>
   <div fxFlex="40" *ngIf="dish">
     <h3>Comments</h3>
-    <mat-list rowHeight="40px">
-      <mat-list *ngFor="let comment of dish.comments">
-        <mat-list-item>
-          {{comment.comment}}
-          {{ comment.rating }} Stars <br /> 
-          -- {{comment.author}}  {{comment.date | date}}
-        </mat-list-item>
-      </mat-list>
+    <mat-list rowHeight="40px" *ngFor="let comment of dish.comments">
+      <mat-list-item>
+        <table class="form-size">
+          <tr>{{comment.comment}}</tr>
+          <!-- <tr>{{comment.rating}}<span id="starGlyph" class="fa fa-star fa-xs"></span></tr> -->
+          <tr>{{ comment.rating }} Stars</tr>
+          <tr>
+            -- {{comment.author}}  {{comment.date | date}} 
+          </tr>
+        </table>
+      </mat-list-item>
+      <br/>
     </mat-list>
+    <div class="form-size">
+      <h3>Comment on this dish</h3>
+      
+      <!-- <p>{{ commentForm.value | json }} {{ commentForm.status | json }}</p> -->
+      <form novalidate [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+          <table class="form-size">
+            <tr>
+                <span>{{ this.commentForm.value['comment'] }}</span>
+            </tr>
+            <tr>
+                <span>{{ this.commentForm.value['rating'] }} Stars</span>
+            </tr>
+            <tr>
+                <span>-- {{ this.commentForm.value['author'] }}</span>
+            </tr>
+          </table>
+          <table class="form-size">
+            <tr>
+              <mat-form-field class="half-width"
+                color="{{(formErrors.author) ? 'warn' : 'primary'}}">
+                <input matInput formControlName="author" placeholder="Author" type="text" required>
+                <mat-hint>
+                    <span [hidden]="!(formErrors.author)">
+                      {{formErrors.author}}
+                    </span>
+                </mat-hint>
+              </mat-form-field>
+            </tr>
+            <tr>
+              <div>How many Stars</div>
+              <mat-slider matInput formControlName="rating" min="1" max="5" step="1" value="1" 
+                thumbLabel tickInterval="1" placeholder="rating">
+              </mat-slider>
+            </tr>
+            <tr>
+              <mat-form-field class="full-width" color="{{(formErrors.comment) ? 'warn' : 'primary'}}">
+                <input matInput formControlName="comment" placeholder="Your Comment" type="text" required>
+                <mat-hint>
+                    <span [hidden]="!(formErrors.comment)">
+                        {{formErrors.comment}}
+                    </span>
+                </mat-hint>
+              </mat-form-field>
+            </tr>
+          </table>
+          <br/>
+        <button type="submit" mat-button class="background-primary text-floral-white" [disabled]="commentForm.invalid">Submit</button>
+      </form>
+    </div>
   </div>
   <div [hidden]="dish">
     <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
     <h4>Loading ... Please Wait</h4>
   </div>
 </div>
+
 
 
