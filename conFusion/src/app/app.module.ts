@@ -32,6 +32,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material';
 import { MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
+import { HttpClientModule } from '@angular/common/http';
+import { baseURL } from './shared/baseurl';
 
 
 @NgModule({
@@ -68,9 +70,14 @@ import { MatIconModule } from '@angular/material/icon';
     MatOptionModule,
     MatProgressSpinnerModule,
     MatIconModule,
-    MatSliderModule
+    MatSliderModule,
+    HttpClientModule
   ],
-  providers: [DishService, PromotionService, LeaderService],
+  providers: [
+    DishService,
+    PromotionService,
+    LeaderService,
+    {provide: 'BaseURL', useValue: baseURL}],
   entryComponents: [LoginComponent],
   bootstrap: [AppComponent]
 })
