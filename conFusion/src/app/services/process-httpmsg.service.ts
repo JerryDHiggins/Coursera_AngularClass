@@ -1,20 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Http, Response } from '@angular/http';
-import 'rxjs/add/observable/throw';
+// import 'rxjs/add/observable/throw';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProcessHttpmsgService {
+export class ProcessHttpMsgService {
 
   constructor() { }
-
-  public extractData(res: Response) {
-    const body: Body = res.json();
-    console.log(body);
-    return body || { };
-  }
 
   public handleError (error: Response | any) {
     // In a real world app, you might use a remote logging infrastructure
