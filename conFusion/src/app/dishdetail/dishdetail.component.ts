@@ -8,15 +8,33 @@ import { Params, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { switchMap } from 'rxjs/operators';
 import { baseURL } from '../shared/baseurl';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-dishdetail',
   templateUrl: './dishdetail.component.html',
-  styleUrls: ['./dishdetail.component.scss']
+  styleUrls: ['./dishdetail.component.scss'],
+  animations: [
+    trigger('visibility', [
+        state('shown', style({
+            transform: 'scale(1.0)',
+            opacity: 1
+        })),
+        state('hidden', style({
+            transform: 'scale(0.5)',
+            opacity: 0
+        })),
+        // transition('* => *', animate('500ms ease-in-out'))
+        transition('shown => hidden', animate('500ms ease-in')),
+        transition('hidden => shown', animate('500ms ease-out'))
+    ])
+  ]
 })
 export class DishdetailComponent implements OnInit {
 
   dish: Dish;
+  visibility = 'shown';
+  restDish = null;
   dishIDs: number[];
   next: number;
   prev: number;
@@ -49,8 +67,9 @@ export class DishdetailComponent implements OnInit {
     this.dishservice.getDishIDs()
       .subscribe( dishIDs => { this.dishIDs = dishIDs; });
     this.route.params
-      .pipe(switchMap((params: Params) => this.dishservice.getDish(+params['id'])))
-      .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id); });
+      .pipe(switchMap((params: Params) => { this.visibility = 'hidden';  return this.dishservice.getDish(+params['id']); }))
+      .subscribe(dish => { this.dish = dish;
+            this.restDish = dish; this.setPrevNext(dish.id); this.visibility = 'shown'; });
   }
   createForm() {
     this.commentForm = this.fb.group({
@@ -88,7 +107,10 @@ export class DishdetailComponent implements OnInit {
   onSubmit() {
     this.comment = this.commentForm.value;
     this.comment.date = new Date().toLocaleDateString();
-    this.dish.comments.push(this.comment);
+    this.restDish.comments.push(this.comment);
+    this.restDish.save()
+      .subscribe(dish => { this.dish = dish; console.log(this.dish); });
+
     this.commentForm.reset({
       rating: 5,
       comment: '',
