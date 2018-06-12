@@ -35,6 +35,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { baseURL } from './shared/baseurl';
 import { ProcessHttpMsgService } from './services/process-httpmsg.service';
+import { RestangularModule, Restangular } from 'ngx-restangular';
+import { RestangularConfigFactory } from './shared/restConfig';
 
 
 @NgModule({
@@ -72,7 +74,8 @@ import { ProcessHttpMsgService } from './services/process-httpmsg.service';
     MatProgressSpinnerModule,
     MatIconModule,
     MatSliderModule,
-    HttpClientModule
+    HttpClientModule,
+    RestangularModule.forRoot(RestangularConfigFactory)
   ],
   providers: [
     DishService,
