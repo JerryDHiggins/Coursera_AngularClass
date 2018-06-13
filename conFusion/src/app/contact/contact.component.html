@@ -33,10 +33,12 @@
       </div>
     </div>
   </div>
-  <div fxFlex fxFlexOffset="20px" class="form-size">
+  <div *ngIf="this.showForm === false">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    <h4>Loading ... Please Wait</h4>
+  </div>
+  <div fxFlex fxFlexOffset="20px" class="form-size"  *ngIf="this.showForm === true">
       <h3>Send us your Feedback</h3>
-      <p>{{ feedbackForm.value | json }} {{ feedbackForm.status | json }}</p>
-
       <form novalidate [formGroup]="feedbackForm" (ngSubmit)="onSubmit()">
         <p>
           <mat-form-field class="half-width"
@@ -98,4 +100,6 @@
         <button type="submit" md-button class="background-primary text-floral-white" [disabled]="feedbackForm.invalid">Submit</button>
       </form>
     </div>
-</div>
+  </div>
+
+

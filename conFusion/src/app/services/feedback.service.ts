@@ -16,6 +16,6 @@ export class FeedbackService {
     private processHTTPMsgService: ProcessHttpMsgService) { }
 
   submitFeedback(feedback: Feedback) {
-    this.restangular.all('feedback').post(feedback);
+    return this.restangular.all('feedback').post(feedback);
   }
 }

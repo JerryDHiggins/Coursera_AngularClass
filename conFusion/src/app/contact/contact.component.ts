@@ -7,6 +7,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material';
 import { MatInputModule, MatFormFieldModule } from '@angular/material';
 import { baseURL } from '../shared/baseurl';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { flyInOut, expand } from '../animations/app.animation';
 
 @Component({
   selector: 'app-contact',
@@ -17,6 +19,7 @@ export class ContactComponent implements OnInit {
   feedbackForm: FormGroup;
   feedback: Feedback;
   contactType = ContactType;
+  showForm = true;
 
   constructor(private fb: FormBuilder,
               private feedbackService: FeedbackService) {
@@ -95,16 +98,20 @@ export class ContactComponent implements OnInit {
 
   onSubmit() {
     this.feedback = this.feedbackForm.value;
-    this.feedbackService.submitFeedback(this.feedback);
-    console.log(this.feedback);
-    this.feedbackForm.reset({
-      firstname: '',
-      lastname: '',
-      telnum: '',
-      email: '',
-      agree: false,
-      contacttype: 'None',
-      message: ''
-    });
+    this.showForm = false;
+    this.feedbackService.submitFeedback(this.feedback)
+      .subscribe(() => {
+        this.showForm = true;
+        console.log(this.feedback);
+        this.feedbackForm.reset({
+          firstname: '',
+          lastname: '',
+          telnum: '',
+          email: '',
+          agree: false,
+          contacttype: 'None',
+          message: ''
+        });
+      });
   }
 }
