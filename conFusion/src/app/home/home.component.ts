@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.dishservice.getFeaturedDish()
-      .subscribe( dishes => this.dish = dishes[0]);
+      .subscribe( dish => this.dish = dish);
     this.promotionservice.getFeaturedPromotion()
       .subscribe( promotion => this.promotion = promotion);
     this.leaderservice.getFeaturedLeader()

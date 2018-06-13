@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { FeedbackService } from '../services/feedback.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Feedback, ContactType } from '../shared/feedback';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material';
 import { MatInputModule, MatFormFieldModule } from '@angular/material';
+import { baseURL } from '../shared/baseurl';
 
 @Component({
   selector: 'app-contact',
@@ -16,9 +18,11 @@ export class ContactComponent implements OnInit {
   feedback: Feedback;
   contactType = ContactType;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+              private feedbackService: FeedbackService) {
     this.createForm();
   }
+
   formErrors = {
     'firstname': '',
     'lastname': '',
@@ -91,6 +95,7 @@ export class ContactComponent implements OnInit {
 
   onSubmit() {
     this.feedback = this.feedbackForm.value;
+    this.feedbackService.submitFeedback(this.feedback);
     console.log(this.feedback);
     this.feedbackForm.reset({
       firstname: '',

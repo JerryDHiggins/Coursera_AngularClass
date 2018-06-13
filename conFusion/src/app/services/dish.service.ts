@@ -27,8 +27,9 @@ export class DishService {
       return  this.restangular.one('dishes', id).get();
     }
 
-    getFeaturedDish(): Observable<Dish[]> {
-      return this.restangular.all('dishes').getList({featured: true});
+    getFeaturedDish(): Observable<Dish> {
+      return this.restangular.all('dishes').getList({featured: true})
+      .pipe(map(dishes => dishes[0]));
     }
 
     getDishIDs(): Observable<number[]> {
