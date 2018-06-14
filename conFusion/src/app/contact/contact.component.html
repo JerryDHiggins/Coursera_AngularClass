@@ -48,12 +48,12 @@
         </div>
       </div>
   </div>
-  <div *ngIf="this.visibility.match('hidden') && this.showFeedbackSent === false">
+  <div *ngIf="this.visibility.match('hidden') && this.showFeedbackSent === false" [@expand]>
     <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
     <h4>Loading ... Please Wait</h4>
   </div>
 
-  <div fxFlex fxFlexOffset="20px" class="form-size"  *ngIf="this.visibility.match('shown')" [@flyInOut]>
+  <div fxFlex fxFlexOffset="20px" class="form-size"  *ngIf="this.visibility.match('shown')" [@expand]>
       <form novalidate [formGroup]="feedbackForm" (ngSubmit)="onSubmit()">
         <p>
           <mat-form-field class="half-width"
