@@ -8,18 +8,25 @@ import { MatOptionModule } from '@angular/material';
 import { MatInputModule, MatFormFieldModule } from '@angular/material';
 import { baseURL } from '../shared/baseurl';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { flyInOut, expand } from '../animations/app.animation';
+import { flyInOut, expand, visibility } from '../animations/app.animation';
 
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
-  styleUrls: ['./contact.component.scss']
+  styleUrls: ['./contact.component.scss'],
+  animations: [
+    visibility(),
+      expand(),
+      flyInOut()
+]
 })
 export class ContactComponent implements OnInit {
   feedbackForm: FormGroup;
   feedback: Feedback;
   contactType = ContactType;
   showForm = true;
+  showFeedbackSent = false;
+  visibility = 'shown';
 
   constructor(private fb: FormBuilder,
               private feedbackService: FeedbackService) {
@@ -98,20 +105,26 @@ export class ContactComponent implements OnInit {
 
   onSubmit() {
     this.feedback = this.feedbackForm.value;
-    this.showForm = false;
+    this.visibility = 'hidden';
     this.feedbackService.submitFeedback(this.feedback)
-      .subscribe(() => {
-        this.showForm = true;
-        console.log(this.feedback);
-        this.feedbackForm.reset({
-          firstname: '',
-          lastname: '',
-          telnum: '',
-          email: '',
-          agree: false,
-          contacttype: 'None',
-          message: ''
-        });
+      .subscribe((feedback) => {
+        this.feedback = feedback;
+        this.showFeedbackSent = true;
+        setTimeout(() => {
+          this.showFeedbackSent = false;
+          this.visibility = 'shown';
+          console.log(this.feedback);
+          this.feedbackForm.reset({
+            firstname: '',
+            lastname: '',
+            telnum: '',
+            email: '',
+            agree: false,
+            contacttype: 'None',
+            message: ''
+          });
+        }, 5000);
+
       });
   }
 }
